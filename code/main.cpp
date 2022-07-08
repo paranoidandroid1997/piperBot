@@ -1,8 +1,9 @@
 #include <iostream>
 
+#define U64 unsigned long long
+
 int main(){
 
-    std::cout << "Hello World" << std::endl;
 
     return 0;
 }
