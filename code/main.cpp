@@ -1,10 +1,15 @@
 #include <iostream>
+#include <vector>
+
+// Basic definitions
+/****************************************************************************************************/
 
 #define U64 unsigned long long
 
-#define GetBit(bitboard, square) (bitboard & (1ULL << square))
-#define SetBit(bitboard, square) (bitboard |= (1ULL << square))
-#define PopBit(bitboard, square) (GetBit(bitboard, square) ? (bitboard ^= (1ULL << square)) : 0)
+#define SIDES 2
+#define SQUARES 64
+#define RANKS 8
+#define FILES 8
 
 enum {
     a8, b8, c8, d8, e8, f8, g8, h8,
@@ -17,19 +22,37 @@ enum {
     a1, b1, c1, d1, e1, f1, g1, h1
 };
 
+enum {
+    white, black
+};
+
+/****************************************************************************************************/
+
+// Bit macros
+/****************************************************************************************************/
+
+#define GET_BIT(bitboard, square) (bitboard & (1ULL << square))
+#define SET_BIT(bitboard, square) (bitboard |= (1ULL << square))
+#define POP_BIT(bitboard, square) (GET_BIT(bitboard, square) ? (bitboard ^= (1ULL << square)) : 0)
+
+/****************************************************************************************************/
+
+// IO
+/****************************************************************************************************/
+
 void PrintBitboard(U64 bitboard){
     std::cout << std::endl;
 
-    for (int rank = 0; rank < 8; rank++){
-        for (int file = 0; file < 8; file++){
-            int square = (rank * 8) + file;
+    for (int rank = 0; rank < RANKS; rank++){
+        for (int file = 0; file < FILES; file++){
+            int square = (rank * FILES) + file;
 
             if (file == 0){
-                std::cout << 8 - rank;
+                std::cout << RANKS - rank;
                 std::cout << " ";
             }
             std::cout << " ";
-            std::cout << (GetBit(bitboard, square) ? 1 : 0);
+            std::cout << (GET_BIT(bitboard, square) ? 1 : 0);
             std::cout << " "; 
         }
         std::cout << std::endl;
@@ -45,15 +68,33 @@ void PrintBitboard(U64 bitboard){
     std:: cout << std::endl;
 }
 
-int main(){
-    U64 bitboard = 0ULL;
-    SetBit(bitboard, e2);
-    SetBit(bitboard, h1);
-    PrintBitboard(bitboard);
-    PopBit(bitboard, e2);
-    PrintBitboard(bitboard);
-    PopBit(bitboard, e2);
-    PrintBitboard(bitboard);
+/****************************************************************************************************/
 
+// Attacks
+/****************************************************************************************************/
+
+std::vector<std::vector<U64>> pawn_attacks[SIDES][SQUARES];
+
+U64 MaskPawnAttack(int square, int side){
+    U64 attacks = 0ULL;
+
+    U64 bitboard = 0ULL;
+
+    SET_BIT(bitboard, square);
+
+    if (side == white){
+
+    }
+    else if (side == black){
+
+    }
+
+    return attacks;
+}
+
+/****************************************************************************************************/
+
+int main(){
+    MaskPawnAttack(e4, white);
     return 0;
 }
